@@ -8,12 +8,12 @@
 sub Main()
     print "in showChannelSGScreen"
     'Indicate this is a Roku SceneGraph application'
-    screen = CreateObject("roSGScreen")
-    m.port = CreateObject("roMessagePort")
+    screen = createObject("roSGScreen")
+    m.port = createObject("roMessagePort")
     screen.setMessagePort(m.port)
 
     'Create a scene and load /components/helloworld.xml'
-    scene = screen.CreateScene("HelloWorld")
+    scene = screen.createScene("HelloWorld")
     screen.show()
 
     while(true)
