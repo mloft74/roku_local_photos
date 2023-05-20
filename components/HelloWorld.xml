@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<component name="HelloWorld" extends="Scene"> 
+<!-- TODO: figure out how to display test from local storage (or whatever roku's equivalent is) -->
+<!-- TODO: figure out buttons -->
+<!-- TODO: figure out keyboard submission -->
+<component name="HelloWorld" extends="Scene" initialFocus="myKeyboard" >
+  <script type="text/brightscript" uri="pkg:/components/HelloWorld.brs" />
+
   <children>
     <Label
       id="myLabel" 
@@ -9,8 +14,11 @@
       horizAlign="center"
       vertAlign="center"
     />
-  </children>
 
-  <script type="text/brightscript" uri="pkg:/components/HelloWorld.brs" />
+    <StandardKeyboardDialog
+      id="myKeyboard"
+      title="keyboard"
+    />
+  </children>
 
 </component>
