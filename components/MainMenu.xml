@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- TODO: figure out how to display test from local storage (or whatever roku's equivalent is) -->
-<!-- TODO: figure out buttons -->
 <!-- TODO: figure out keyboard submission -->
 <component name="MainMenu" extends="Scene" initialFocus="mainMenuOptions">
   <script type="text/brightscript" uri="pkg:/components/MainMenu.brs" />
 
   <children>
+    <Label
+      id="title"
+      text="Screen Saver"
+      horizAlign="left"
+      vertAlign="center"
+      translation="[200, 100]"
+      font="font:LargeBoldSystemFont"
+    />
+
     <Label
       id="serverIpLabel"
       text="Server IP:"
