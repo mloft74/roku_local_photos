@@ -2,8 +2,8 @@
 <!-- TODO: figure out how to display test from local storage (or whatever roku's equivalent is) -->
 <!-- TODO: figure out buttons -->
 <!-- TODO: figure out keyboard submission -->
-<component name="HelloWorld" extends="Scene" initialFocus="myKeyboard" >
-  <script type="text/brightscript" uri="pkg:/components/HelloWorld.brs" />
+<component name="MainMenu" extends="Scene" initialFocus="myKeyboard" >
+  <script type="text/brightscript" uri="pkg:/components/MainMenu.brs" />
 
   <children>
     <Label
