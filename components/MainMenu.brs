@@ -1,18 +1,16 @@
-'** 
-'** Example: Edit a Label size and color with BrightScript
-'**
 function init()
+    print "[MainMenu] init"
+
+    m.serverIpValue = m.top.findNode("serverIpValue")
+    m.serverIpValue.text = "random text"
+
+    m.mainMenuOptions = m.top.findNode("mainMenuOptions")
+    m.mainMenuOptions.observeField("itemSelected", "settext")
+
     m.top.setFocus(true)
-    m.myLabel = m.top.findNode("myLabel")
+end function
 
-    'Set the font size
-    m.myLabel.font.size=92
-
-    'Set the color to light blue
-    m.myLabel.color="0x72D7EEFF"
-
-    '**
-    '** The full list of editable attributes can be located at:
-    '** http://sdkdocs.roku.com/display/sdkdoc/Label#Label-Fields
-    '**
+function settext()
+    print "[MainMenu] setText"
+    m.serverIpValue.text = m.mainMenuOptions.content.getChild(m.mainMenuOptions.itemSelected).title
 end function

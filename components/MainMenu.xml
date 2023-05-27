@@ -2,23 +2,36 @@
 <!-- TODO: figure out how to display test from local storage (or whatever roku's equivalent is) -->
 <!-- TODO: figure out buttons -->
 <!-- TODO: figure out keyboard submission -->
-<component name="MainMenu" extends="Scene" initialFocus="myKeyboard" >
+<component name="MainMenu" extends="Scene" initialFocus="mainMenuOptions">
   <script type="text/brightscript" uri="pkg:/components/MainMenu.brs" />
 
   <children>
     <Label
-      id="myLabel" 
-      text="Hello World!"
-      width="1280" 
-      height="720" 
-      horizAlign="center"
+      id="serverIpLabel"
+      text="Server IP:"
+      horizAlign="left"
       vertAlign="center"
+      translation="[200, 200]"
     />
 
-    <StandardKeyboardDialog
-      id="myKeyboard"
-      title="keyboard"
+    <Label
+      id="serverIpValue"
+      horizAlign="left"
+      vertAlign="center"
+      translation="[200, 250]"
     />
+
+    <LabelList
+      id="mainMenuOptions"
+      translation="[200, 300]"
+    >
+      <ContentNode
+        id="mainMenuOptionsContent"
+        role="content"
+      >
+        <ContentNode title="First" />
+        <ContentNode title="Second" />
+      </ContentNode>
+    </LabelList>
   </children>
-
 </component>
