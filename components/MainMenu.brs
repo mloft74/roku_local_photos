@@ -5,16 +5,21 @@ function init()
     serverIp = m.registrySection.read("serverIp")
 
     m.serverIpValue = m.top.findNode("serverIpValue")
-    if serverIp <> invalid and serverIp <> "" then
-        m.serverIpValue.text = serverIp
-    else
-        m.serverIpValue.text = "IP not set"
-    end if
+    setServerIpValue(serverIp)
 
     m.mainMenuOptions = m.top.findNode("mainMenuOptions")
     m.mainMenuOptions.observeField("itemSelected", "onItemSelected")
 
     m.top.setFocus(true)
+end function
+
+function setServerIpValue(serverIp as string)
+    print "[MainMenu] setServerIpValue"
+    if serverIp <> invalid and serverIp <> "" then
+        m.serverIpValue.text = serverIp
+    else
+        m.serverIpValue.text = "IP not set"
+    end if
 end function
 
 function onItemSelected()
@@ -51,7 +56,7 @@ function saveServerIp()
 
     serverIp = m.top.dialog.text
 
-    m.serverIpValue.text = serverIp
+    setServerIpValue(serverIp)
 
     m.registrySection.write("serverIp", serverIp)
     m.registrySection.flush()
