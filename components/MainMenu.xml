@@ -37,8 +37,8 @@
         id="mainMenuOptionsContent"
         role="content"
       >
-        <ContentNode title="First" />
-        <ContentNode title="Second" />
+        <ContentNode title="Check connection" />
+        <ContentNode title="Set server IP" />
       </ContentNode>
     </LabelList>
   </children>
