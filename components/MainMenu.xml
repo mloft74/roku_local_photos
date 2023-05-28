@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!-- TODO: figure out how to display test from local storage (or whatever roku's equivalent is) -->
-<!-- TODO: figure out keyboard submission -->
 <component name="MainMenu" extends="Scene" initialFocus="mainMenuOptions">
   <script type="text/brightscript" uri="pkg:/components/MainMenu.brs" />
 
@@ -8,8 +6,6 @@
     <Label
       id="title"
       text="Screen Saver"
-      horizAlign="left"
-      vertAlign="center"
       translation="[200, 100]"
       font="font:LargeBoldSystemFont"
     />
@@ -17,16 +13,22 @@
     <Label
       id="serverIpLabel"
       text="Server IP:"
-      horizAlign="left"
-      vertAlign="center"
       translation="[200, 200]"
     />
 
     <Label
       id="serverIpValue"
-      horizAlign="left"
-      vertAlign="center"
       translation="[200, 250]"
+    />
+
+    <Label
+      id="connectionStatusLabel"
+      translation="[600, 300]"
+    />
+
+    <Label
+      id="connectionStatusValue"
+      translation="[600, 350]"
     />
 
     <LabelList

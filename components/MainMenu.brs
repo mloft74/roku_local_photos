@@ -7,6 +7,9 @@ function init()
     m.serverIpValue = m.top.findNode("serverIpValue")
     setServerIpValue(serverIp)
 
+    m.connectionStatusLabel = m.top.findNode("connectionStatusLabel")
+    m.connectionStatusValue = m.top.findNode("connectionStatusValue")
+
     m.mainMenuOptions = m.top.findNode("mainMenuOptions")
     m.mainMenuOptions.observeField("itemSelected", "onItemSelected")
 
@@ -37,6 +40,8 @@ end function
 
 function checkConnection()
     print "[MainMenu] checkConnection"
+    m.connectionStatusLabel.text = "Connection status:"
+    m.connectionStatusValue.text = "Not implemented"
 end function
 
 function openServeIpDialog()
