@@ -12,6 +12,7 @@ end function
 function checkConnection()
     print "[CheckConnectionTask] checkConnection"
     m.top.message = checkConnectionInternal()
+    m.top.control = "done"
 end function
 
 function checkConnectionInternal() as string

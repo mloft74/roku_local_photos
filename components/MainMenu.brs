@@ -44,14 +44,19 @@ function startConnectionTask()
     m.connectionStatusValue.text = "Connecting..."
 
     m.connectionTask = CreateObject("roSGNode", "CheckConnectionTask")
-    m.connectionTask.observeField("message", "listenToMessage")
+    m.connectionTask.observeField("state", "listenForConnectionDone")
     m.connectionTask.control = "run"
 end function
 
-function listenToMessage()
-    print "[MainMenu] listenToMessage"
+function listenForConnectionDone()
+    print "[MainMenu] listenForConnectionDone"
+    if m.connectionTask.state <> "done"
+        return invalid
+    end if
+    print "donso"
     m.connectionStatusValue.text = m.connectionTask.message
-    m.connectionTask.unobserveField("message")
+    m.connectionTask.unobserveField("state")
+    m.connectionTask = invalid
 end function
 
 function openServerIpDialog()
