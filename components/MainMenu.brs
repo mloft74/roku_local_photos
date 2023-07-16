@@ -14,7 +14,7 @@ function init()
     m.mainMenuOptions.observeField("itemSelected", "onItemSelected")
 
     m.top.setFocus(true)
-endfunction
+end function
 
 function setServerIpValue(serverIp as string)
     print "[MainMenu] setServerIpValue"
@@ -22,9 +22,9 @@ function setServerIpValue(serverIp as string)
         m.serverIpValue.text = serverIp
     else
         m.serverIpValue.text = "IP not set"
-    endif
+    end if
     m.connectionStatusValue.text = "Untested"
-endfunction
+end function
 
 function onItemSelected()
     print "[MainMenu] onItemSelected"
@@ -36,8 +36,8 @@ function onItemSelected()
     else
         unknownOptionTitle = m.mainMenuOptions.content.getChild(index).title
         print "unhandled option: " + unknownOptionTitle
-    endif
-endfunction
+    end if
+end function
 
 function startConnectionTask()
     print "[MainMenu] startConnectionTask"
@@ -46,13 +46,13 @@ function startConnectionTask()
     m.connectionTask = CreateObject("roSGNode", "CheckConnectionTask")
     m.connectionTask.observeField("message", "listenToMessage")
     m.connectionTask.control = "run"
-endfunction
+end function
 
 function listenToMessage()
     print "[MainMenu] listenToMessage"
     m.connectionStatusValue.text = m.connectionTask.message
     m.connectionTask.unobserveField("message")
-endfunction
+end function
 
 function openServerIpDialog()
     print "[MainMenu] openServerIpDialog"
@@ -64,13 +64,13 @@ function openServerIpDialog()
         serverIp = m.registrySection.read("serverIp")
         if serverIp <> invalid
             dialog.text = serverIp
-        endif
-    endif
+        end if
+    end if
 
     dialog.observeField("buttonSelected", "saveServerIp")
 
     m.top.dialog = dialog
-endfunction
+end function
 
 function saveServerIp()
     print "[MainMenu] saveServerIp"
@@ -84,4 +84,4 @@ function saveServerIp()
 
     m.top.dialog.unobserveField("buttonSelected")
     m.top.dialog.close = true
-endfunction
+end function
