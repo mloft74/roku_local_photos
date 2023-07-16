@@ -1,61 +1,61 @@
-function init()
-    print "[CheckConnectionTask] init"
-    m.top.functionName = "checkConnection"
+function Init()
+    print "[CheckConnectionTask] Init"
+    m.top.functionName = "CheckConnection"
 
-    m.port = createObject("roMessagePort")
+    m.port = CreateObject("roMessagePort")
 
-    m.xfer = createObject("roUrlTransfer")
-    m.xfer.setPort(m.port)
-    m.registrySection = createObject("roRegistrySection", "rokuLocalPhotos")
+    m.xfer = CreateObject("roUrlTransfer")
+    m.xfer.SetPort(m.port)
+    m.registrySection = CreateObject("roRegistrySection", "rokuLocalPhotos")
 end function
 
-function checkConnection()
-    print "[CheckConnectionTask] checkConnection"
-    m.top.message = checkConnectionInternal()
+function CheckConnection()
+    print "[CheckConnectionTask] CheckConnection"
+    m.top.message = CheckConnectionInternal()
     m.top.control = "done"
 end function
 
-function checkConnectionInternal() as string
-    if not m.registrySection.exists("serverIp")
+function CheckConnectionInternal() as string
+    if not m.registrySection.Exists("serverIp")
         return "Server IP not set"
     end if
 
-    serverIp = m.registrySection.read("serverIp")
+    serverIp = m.registrySection.Read("serverIp")
     if serverIp = invalid or serverIp = ""
         return "IP not set"
     end if
 
-    m.xfer.setUrl(serverIp + "/api/ping")
-    if not m.xfer.asyncGetToString()
+    m.xfer.SetUrl(serverIp + "/api/ping")
+    if not m.xfer.AsyncGetToString()
         return "Failed to start request"
     end if
 
     while true
-        msg = wait(0, m.port)
+        msg = Wait(0, m.port)
         if msg = invalid
             return "Roku message port returned invalid"
         end if
 
-        msgType = type(msg)
+        msgType = Type(msg)
         if not msgType = "roUrlEvent"
             return "Got wrong event type from port: " + msgType
         end if
-        if not msg.getInt() = 1
+        if not msg.GetInt() = 1
             continue while
         end if
 
-        if not msg.getResponseCode() = 200
-            return msg.getFailureReason()
+        if not msg.GetResponseCode() = 200
+            return msg.GetFailureReason()
         end if
 
-        responseStr = msg.getString()
+        responseStr = msg.GetString()
         if responseStr = invalid
             return "Could not get response"
         else if responseStr = ""
             return "Response was empty"
         end if
 
-        response = parseJson(responseStr)
+        response = ParseJson(responseStr)
         if response = invalid
             return "Could not parse response"
         end if

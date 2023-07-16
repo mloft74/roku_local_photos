@@ -1,23 +1,23 @@
-function init()
-    print "[MainMenu] init"
+function Init()
+    print "[MainMenu] Init"
 
-    m.registrySection = createObject("roRegistrySection", "rokuLocalPhotos")
-    serverIp = m.registrySection.read("serverIp")
+    m.registrySection = CreateObject("roRegistrySection", "rokuLocalPhotos")
+    serverIp = m.registrySection.Read("serverIp")
 
-    m.serverIpValue = m.top.findNode("serverIpValue")
+    m.serverIpValue = m.top.FindNode("serverIpValue")
 
-    m.connectionStatusValue = m.top.findNode("connectionStatusValue")
+    m.connectionStatusValue = m.top.FindNode("connectionStatusValue")
 
-    setServerIpValue(serverIp)
+    SetServerIpValue(serverIp)
 
-    m.mainMenuOptions = m.top.findNode("mainMenuOptions")
-    m.mainMenuOptions.observeField("itemSelected", "onItemSelected")
+    m.mainMenuOptions = m.top.FindNode("mainMenuOptions")
+    m.mainMenuOptions.ObserveField("itemSelected", "OnItemSelected")
 
-    m.top.setFocus(true)
+    m.top.SetFocus(true)
 end function
 
-function setServerIpValue(serverIp as string)
-    print "[MainMenu] setServerIpValue"
+function SetServerIpValue(serverIp as string)
+    print "[MainMenu] SetServerIpValue"
     if serverIp <> invalid and serverIp <> "" then
         m.serverIpValue.text = serverIp
     else
@@ -26,67 +26,67 @@ function setServerIpValue(serverIp as string)
     m.connectionStatusValue.text = "Untested"
 end function
 
-function onItemSelected()
-    print "[MainMenu] onItemSelected"
+function OnItemSelected()
+    print "[MainMenu] OnItemSelected"
     index = m.mainMenuOptions.itemSelected
     if index = 0 then
-        startConnectionTask()
+        StartConnectionTask()
     else if index = 1 then
-        openServerIpDialog()
+        OpenServerIpDialog()
     else
-        unknownOptionTitle = m.mainMenuOptions.content.getChild(index).title
-        print "unhandled option: " + unknownOptionTitle
+        unknownOptionTitle = m.mainMenuOptions.content.GetChild(index).title
+        print "unhandled option: "; unknownOptionTitle
     end if
 end function
 
-function startConnectionTask()
-    print "[MainMenu] startConnectionTask"
+function StartConnectionTask()
+    print "[MainMenu] StartConnectionTask"
     m.connectionStatusValue.text = "Connecting..."
 
     m.connectionTask = CreateObject("roSGNode", "CheckConnectionTask")
-    m.connectionTask.observeField("state", "listenForConnectionDone")
+    m.connectionTask.ObserveField("state", "ListenForConnectionDone")
     m.connectionTask.control = "run"
 end function
 
-function listenForConnectionDone()
-    print "[MainMenu] listenForConnectionDone"
+function ListenForConnectionDone()
+    print "[MainMenu] ListenForConnectionDone"
     if m.connectionTask.state <> "done"
         return invalid
     end if
     print "donso"
     m.connectionStatusValue.text = m.connectionTask.message
-    m.connectionTask.unobserveField("state")
+    m.connectionTask.UnobserveField("state")
     m.connectionTask = invalid
 end function
 
-function openServerIpDialog()
-    print "[MainMenu] openServerIpDialog"
-    dialog = createObject("roSGNode", "StandardKeyboardDialog")
+function OpenServerIpDialog()
+    print "[MainMenu] OpenServerIpDialog"
+    dialog = CreateObject("roSGNode", "StandardKeyboardDialog")
     dialog.id = "serverIpDialog"
     dialog.title = "Server IP"
     dialog.buttons = ["Done"]
-    if m.registrySection.exists("serverIp")
-        serverIp = m.registrySection.read("serverIp")
+    if m.registrySection.Exists("serverIp")
+        serverIp = m.registrySection.Read("serverIp")
         if serverIp <> invalid
             dialog.text = serverIp
         end if
     end if
 
-    dialog.observeField("buttonSelected", "saveServerIp")
+    dialog.ObserveField("buttonSelected", "SaveServerIp")
 
     m.top.dialog = dialog
 end function
 
-function saveServerIp()
-    print "[MainMenu] saveServerIp"
+function SaveServerIp()
+    print "[MainMenu] SaveServerIp"
 
     serverIp = m.top.dialog.text
 
-    setServerIpValue(serverIp)
+    SetServerIpValue(serverIp)
 
-    m.registrySection.write("serverIp", serverIp)
-    m.registrySection.flush()
+    m.registrySection.Write("serverIp", serverIp)
+    m.registrySection.Flush()
 
-    m.top.dialog.unobserveField("buttonSelected")
+    m.top.dialog.UnobserveField("buttonSelected")
     m.top.dialog.close = true
 end function

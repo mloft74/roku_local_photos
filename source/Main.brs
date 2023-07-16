@@ -1,19 +1,19 @@
 sub Main()
     print "[Main] Main"
     'Indicate this is a Roku SceneGraph application'
-    screen = createObject("roSGScreen")
-    m.port = createObject("roMessagePort")
-    screen.setMessagePort(m.port)
+    screen = CreateObject("roSGScreen")
+    m.port = CreateObject("roMessagePort")
+    screen.SetMessagePort(m.port)
 
-    scene = screen.createScene("MainMenu")
-    screen.show()
+    scene = screen.CreateScene("MainMenu")
+    screen.Show()
 
-    while(true)
-        msg = wait(0, m.port)
-        if (msg <> invalid)
-            msgType = type(msg)
+    while true
+        msg = Wait(0, m.port)
+        if msg <> invalid
+            msgType = Type(msg)
             if msgType = "roSGScreenEvent"
-                if msg.isScreenClosed() then return
+                if msg.IsScreenClosed() then return
             end if
         end if
     end while
@@ -22,19 +22,19 @@ end sub
 sub RunScreenSaver()
     print "[Main] RunScreenSaver"
     'Indicate this is a Roku SceneGraph application'
-    screen = createObject("roSGScreen")
-    port = createObject("roMessagePort")
-    screen.setMessagePort(port)
+    screen = CreateObject("roSGScreen")
+    port = CreateObject("roMessagePort")
+    screen.SetMessagePort(port)
 
-    scene = screen.createScene("ScreenSaver")
-    screen.show()
+    scene = screen.CreateScene("ScreenSaver")
+    screen.Show()
 
-    while(true)
-        msg = wait(0, port)
-        if (msg <> invalid)
-            msgType = type(msg)
+    while true
+        msg = Wait(0, port)
+        if msg <> invalid
+            msgType = Type(msg)
             if msgType = "roSGScreenEvent"
-                if msg.isScreenClosed() then return
+                if msg.IsScreenClosed() then return
             end if
         end if
     end while
