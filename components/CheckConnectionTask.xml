@@ -1,7 +1,7 @@
 <?xml version = "1.0" encoding = "utf-8" ?>
 
 <component name = "CheckConnectionTask" extends = "Task" >
-  <script type="text/brightscript" uri="pkg:/components/CheckConnectionTask.brs" />
+  <script type = "text/brightscript" uri = "pkg:/components/CheckConnectionTask.brs" />
 
   <interface>
     <field id = "message" type = "string" />

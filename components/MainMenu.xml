@@ -1,48 +1,48 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<component name="MainMenu" extends="Scene" initialFocus="mainMenuOptions">
-  <script type="text/brightscript" uri="pkg:/components/MainMenu.brs" />
+<?xml version = "1.0" encoding = "utf-8" ?>
+<component name = "MainMenu" extends = "Scene" initialFocus = "mainMenuOptions">
+  <script type = "text/brightscript" uri = "pkg:/components/MainMenu.brs" />
 
   <children>
     <Label
-      id="title"
-      text="Screen Saver"
-      translation="[100, 100]"
-      font="font:LargeBoldSystemFont"
+      id = "title"
+      text = "Screen Saver"
+      translation = "[100, 100]"
+      font = "font:LargeBoldSystemFont"
     />
 
     <Label
-      id="serverIpLabel"
-      text="Server IP:"
-      translation="[100, 200]"
+      id = "serverIpLabel"
+      text = "Server IP:"
+      translation = "[100, 200]"
     />
 
     <Label
-      id="serverIpValue"
-      translation="[150, 250]"
+      id = "serverIpValue"
+      translation = "[150, 250]"
     />
 
     <Label
-      id="connectionStatusLabel"
-      text="Connection Status:"
-      translation="[100, 300]"
+      id = "connectionStatusLabel"
+      text = "Connection Status:"
+      translation = "[100, 300]"
     />
 
     <Label
-      id="connectionStatusValue"
-      text="Untested"
-      translation="[150, 350]"
+      id = "connectionStatusValue"
+      text = "Untested"
+      translation = "[150, 350]"
     />
 
     <LabelList
-      id="mainMenuOptions"
-      translation="[100, 400]"
+      id = "mainMenuOptions"
+      translation = "[100, 400]"
     >
       <ContentNode
-        id="mainMenuOptionsContent"
-        role="content"
+        id = "mainMenuOptionsContent"
+        role = "content"
       >
-        <ContentNode title="Check connection" />
-        <ContentNode title="Set server IP" />
+        <ContentNode title = "Check connection" />
+        <ContentNode title = "Set server IP" />
       </ContentNode>
     </LabelList>
   </children>

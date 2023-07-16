@@ -10,6 +10,7 @@ screensaver_title=Roku Local Photos
 major_version=1
 minor_version=0
 build_version=00001
+ui_resolutions=hd
 
 ##   Channel Assets
 ###  Main Menu Icons / Channel Poster Artwork 
