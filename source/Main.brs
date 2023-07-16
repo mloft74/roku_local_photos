@@ -13,6 +13,6 @@ sub Main()
         msgType = type(msg)
         if msgType = "roSGScreenEvent"
             if msg.isScreenClosed() then return
-        end if
-    end while
-end sub
+        endif
+    endwhile
+endsub

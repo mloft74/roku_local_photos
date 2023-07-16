@@ -7,12 +7,12 @@ function init()
     m.xfer = createObject("roUrlTransfer")
     m.xfer.setPort(m.port)
     m.registrySection = createObject("roRegistrySection", "rokuLocalPhotos")
-end function
+endfunction
 
 function checkConnection()
     print "[CheckConnectionTask] checkConnection"
     m.top.message = checkConnectionInternal()
-end function
+endfunction
 
 function checkConnectionInternal() as string
     if not m.registrySection.exists("serverIp")
@@ -66,4 +66,4 @@ function checkConnectionInternal() as string
             return message
         endif
     endwhile
-end function
+endfunction

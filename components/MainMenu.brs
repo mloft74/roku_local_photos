@@ -5,15 +5,16 @@ function init()
     serverIp = m.registrySection.read("serverIp")
 
     m.serverIpValue = m.top.findNode("serverIpValue")
-    setServerIpValue(serverIp)
 
     m.connectionStatusValue = m.top.findNode("connectionStatusValue")
+
+    setServerIpValue(serverIp)
 
     m.mainMenuOptions = m.top.findNode("mainMenuOptions")
     m.mainMenuOptions.observeField("itemSelected", "onItemSelected")
 
     m.top.setFocus(true)
-end function
+endfunction
 
 function setServerIpValue(serverIp as string)
     print "[MainMenu] setServerIpValue"
@@ -21,8 +22,9 @@ function setServerIpValue(serverIp as string)
         m.serverIpValue.text = serverIp
     else
         m.serverIpValue.text = "IP not set"
-    end if
-end function
+    endif
+    m.connectionStatusValue.text = "Untested"
+endfunction
 
 function onItemSelected()
     print "[MainMenu] onItemSelected"
@@ -34,8 +36,8 @@ function onItemSelected()
     else
         unknownOptionTitle = m.mainMenuOptions.content.getChild(index).title
         print "unhandled option: " + unknownOptionTitle
-    end if
-end function
+    endif
+endfunction
 
 function startConnectionTask()
     print "[MainMenu] startConnectionTask"
@@ -44,13 +46,13 @@ function startConnectionTask()
     m.connectionTask = CreateObject("roSGNode", "CheckConnectionTask")
     m.connectionTask.observeField("message", "listenToMessage")
     m.connectionTask.control = "run"
-end function
+endfunction
 
 function listenToMessage()
     print "[MainMenu] listenToMessage"
     m.connectionStatusValue.text = m.connectionTask.message
     m.connectionTask.unobserveField("message")
-end function
+endfunction
 
 function openServerIpDialog()
     print "[MainMenu] openServerIpDialog"
@@ -58,11 +60,17 @@ function openServerIpDialog()
     dialog.id = "serverIpDialog"
     dialog.title = "Server IP"
     dialog.buttons = ["Done"]
+    if m.registrySection.exists("serverIp")
+        serverIp = m.registrySection.read("serverIp")
+        if serverIp <> invalid
+            dialog.text = serverIp
+        endif
+    endif
 
     dialog.observeField("buttonSelected", "saveServerIp")
 
     m.top.dialog = dialog
-end function
+endfunction
 
 function saveServerIp()
     print "[MainMenu] saveServerIp"
@@ -76,4 +84,4 @@ function saveServerIp()
 
     m.top.dialog.unobserveField("buttonSelected")
     m.top.dialog.close = true
-end function
+endfunction
