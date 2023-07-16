@@ -6,34 +6,36 @@
     <Label
       id="title"
       text="Screen Saver"
-      translation="[200, 100]"
+      translation="[100, 100]"
       font="font:LargeBoldSystemFont"
     />
 
     <Label
       id="serverIpLabel"
       text="Server IP:"
-      translation="[200, 200]"
+      translation="[100, 200]"
     />
 
     <Label
       id="serverIpValue"
-      translation="[200, 250]"
+      translation="[150, 250]"
     />
 
     <Label
       id="connectionStatusLabel"
-      translation="[600, 300]"
+      text="Connection Status:"
+      translation="[100, 300]"
     />
 
     <Label
       id="connectionStatusValue"
-      translation="[600, 350]"
+      text="Untested"
+      translation="[150, 350]"
     />
 
     <LabelList
       id="mainMenuOptions"
-      translation="[200, 300]"
+      translation="[100, 400]"
     >
       <ContentNode
         id="mainMenuOptionsContent"

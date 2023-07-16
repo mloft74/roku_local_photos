@@ -7,7 +7,6 @@ function init()
     m.serverIpValue = m.top.findNode("serverIpValue")
     setServerIpValue(serverIp)
 
-    m.connectionStatusLabel = m.top.findNode("connectionStatusLabel")
     m.connectionStatusValue = m.top.findNode("connectionStatusValue")
 
     m.mainMenuOptions = m.top.findNode("mainMenuOptions")
@@ -40,7 +39,6 @@ end function
 
 function startConnectionTask()
     print "[MainMenu] startConnectionTask"
-    m.connectionStatusLabel.text = "Connection status:"
     m.connectionStatusValue.text = "Connecting..."
 
     m.connectionTask = CreateObject("roSGNode", "CheckConnectionTask")
