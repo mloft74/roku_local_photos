@@ -29,23 +29,33 @@ function onItemSelected()
     print "[MainMenu] onItemSelected"
     index = m.mainMenuOptions.itemSelected
     if index = 0 then
-        checkConnection()
+        startConnectionTask()
     else if index = 1 then
-        openServeIpDialog()
+        openServerIpDialog()
     else
         unknownOptionTitle = m.mainMenuOptions.content.getChild(index).title
         print "unhandled option: " + unknownOptionTitle
     end if
 end function
 
-function checkConnection()
-    print "[MainMenu] checkConnection"
+function startConnectionTask()
+    print "[MainMenu] startConnectionTask"
     m.connectionStatusLabel.text = "Connection status:"
-    m.connectionStatusValue.text = "Not implemented"
+    m.connectionStatusValue.text = "Connecting..."
+
+    m.connectionTask = CreateObject("roSGNode", "CheckConnectionTask")
+    m.connectionTask.observeField("message", "listenToMessage")
+    m.connectionTask.control = "run"
 end function
 
-function openServeIpDialog()
-    print "[MainMenu] openServeIpDialog"
+function listenToMessage()
+    print "[MainMenu] listenToMessage"
+    m.connectionStatusValue.text = m.connectionTask.message
+    m.connectionTask.unobserveField("message")
+end function
+
+function openServerIpDialog()
+    print "[MainMenu] openServerIpDialog"
     dialog = createObject("roSGNode", "StandardKeyboardDialog")
     dialog.id = "serverIpDialog"
     dialog.title = "Server IP"
