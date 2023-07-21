@@ -53,7 +53,6 @@ function ListenForConnectionDone()
     if m.connectionTask.state <> "done"
         return invalid
     end if
-    print "donso"
     m.connectionStatusValue.text = m.connectionTask.message
     m.connectionTask.UnobserveField("state")
     m.connectionTask = invalid

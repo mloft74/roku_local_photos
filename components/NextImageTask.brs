@@ -38,6 +38,7 @@ function NextImageInternal() as object
     end if
 
     m.xfer.SetUrl(serverIp + "/api/image/take_next")
+    m.xfer.SetRequest("POST")
     if not m.xfer.AsyncGetToString()
         print "[NextImageTask] NextImageInternal | Failed to start request"
         return invalid
@@ -92,7 +93,7 @@ end function
 
 function GetFileName(input as object) as string
     print "[NextImageTask] GetFileName"
-    fileName = input.fileName
+    fileName = input.file_name
     if fileName = invalid
         print "[NextImageTask] GetFileName | fileName invalid"
         return invalid

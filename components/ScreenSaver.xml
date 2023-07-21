@@ -8,7 +8,6 @@
       loadWidth = "1280"
       loadHeight = "720"
       loadDisplayMode = "scaleToFit"
-      uri = "http://10.0.0.192:3000/image/deishuuShirt.jpeg"
     />
   </children>
 </component>
