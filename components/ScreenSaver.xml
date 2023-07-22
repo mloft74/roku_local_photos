@@ -4,10 +4,45 @@
 
   <children>
     <Poster
-      id = "poster"
+      id = "posterA"
       loadWidth = "1280"
       loadHeight = "720"
       loadDisplayMode = "scaleToFit"
+      opacity = "0.0"
     />
+
+    <Poster
+      id = "posterB"
+      loadWidth = "1280"
+      loadHeight = "720"
+      loadDisplayMode = "scaleToFit"
+      opacity = "0.0"
+    />
+
+    <Animation
+      id = "fadeInAnimation"
+      repeat = "false"
+      duration = "0.5"
+    >
+      <FloatFieldInterpolator
+        id = "fadeInInterpolator"
+        key = "[0.0,1.0]"
+        KeyValue = "[0.0,1.0]"
+        fieldToInterp = "posterA.opacity"
+      />
+    </Animation>
+
+    <Animation
+      id = "fadeOutAnimation"
+      repeat = "false"
+      duration = "0.5"
+    >
+      <FloatFieldInterpolator
+        id = "fadeOutInterpolator"
+        key = "[0.0,1.0]"
+        KeyValue = "[1.0,0.0]"
+        fieldToInterp = "posterB.opacity"
+      />
+    </Animation>
   </children>
 </component>
