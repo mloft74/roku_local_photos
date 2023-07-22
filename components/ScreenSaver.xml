@@ -20,7 +20,7 @@
     />
 
     <Animation
-      id = "fadeInAnimation"
+      id = "animation"
       repeat = "false"
       duration = "0.5"
     >
@@ -30,13 +30,7 @@
         KeyValue = "[0.0,1.0]"
         fieldToInterp = "posterA.opacity"
       />
-    </Animation>
 
-    <Animation
-      id = "fadeOutAnimation"
-      repeat = "false"
-      duration = "0.5"
-    >
       <FloatFieldInterpolator
         id = "fadeOutInterpolator"
         key = "[0.0,1.0]"
@@ -44,5 +38,10 @@
         fieldToInterp = "posterB.opacity"
       />
     </Animation>
+
+    <Timer
+      id = "timer"
+      duration = "8.0"
+    />
   </children>
 </component>

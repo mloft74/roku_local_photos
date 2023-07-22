@@ -5,10 +5,12 @@ function Init()
 
     m.currentPoster = m.top.FindNode("posterA")
     m.nextPoster = m.top.FindNode("posterB")
-    m.fadeInAnimation = m.top.FindNode("fadeInAnimation")
+    m.animation = m.top.FindNode("animation")
     m.fadeInInterpolator = m.top.FindNode("fadeInInterpolator")
-    m.fadeOutAnimation = m.top.FindNode("fadeOutAnimation")
     m.fadeOutInterpolator = m.top.FindNode("fadeOutInterpolator")
+
+    m.timer = m.top.FindNode("timer")
+    m.timer.ObserveField("fire", "SwapPosters")
 
     registrySection = CreateObject("roRegistrySection", "rokuLocalPhotos")
     m.serverIp = registrySection.Read("serverIp")
@@ -42,5 +44,30 @@ function FadeInForInit()
         return invalid
     end if
     m.currentPoster.UnobserveField("loadStatus")
-    m.fadeInAnimation.control = "start"
+    m.animation.control = "start"
+    ' TODO: add listener for when animation is done to start timer
+end function
+
+function StartNextImageTask()
+    print "[ScreenSaver] StartNextImageTask"
+    m.nextImageTask = CreateObject("roSGNode", "NextImageTask")
+    m.nextImageTask.ObserveField("state", "ListenForNextImageDone")
+    m.nextImageTask.control = "run"
+end function
+
+function ListenForNextImageDone()
+    print "[ScreenSaver] ListenForNextImageDone"
+    if m.nextImageTask.state <> "done"
+        return invalid
+    end if
+    m.nextImageTask.UnobserveField("state")
+
+    m.nextPoster.uri = m.serverIp + "/image/" + m.nextImageTask.fileName
+
+    m.nextImageTask = invalid
+end function
+
+function SwapPosters()
+    print "[ScreenSaver] SwapPosters"
+    ' TODO: impl
 end function
