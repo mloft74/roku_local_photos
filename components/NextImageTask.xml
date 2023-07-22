@@ -7,5 +7,6 @@
     <field id = "fileName" type = "string" />
     <field id = "width" type = "integer" />
     <field id = "height" type = "integer" />
+    <field id = "taskNumber" type = "integer" />
   </interface>
 </component>

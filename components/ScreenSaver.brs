@@ -20,22 +20,22 @@ end function
 
 function StartNextImageTaskForInit()
     print "[ScreenSaver] StartNextImageTaskForInit"
-    m.nextImageTask = CreateObject("roSGNode", "NextImageTask")
-    m.nextImageTask.ObserveField("state", "ListenForNextImageDoneForInit")
-    m.nextImageTask.control = "run"
+    m.nextImageTaskForInit = CreateObject("roSGNode", "NextImageTask")
+    m.nextImageTaskForInit.ObserveField("state", "ListenForNextImageDoneForInit")
+    m.nextImageTaskForInit.control = "run"
 end function
 
 function ListenForNextImageDoneForInit()
-    print "[ScreenSaver] ListenForNextImageDoneForInit"
-    if m.nextImageTask.state <> "done"
+    print "[ScreenSaver] ListenForNextImageDoneForInit > state:"; m.nextImageTaskForInit.state
+    if m.nextImageTaskForInit.state <> "done"
         return invalid
     end if
-    m.nextImageTask.UnobserveField("state")
+    m.nextImageTaskForInit.UnobserveField("state")
 
     m.currentPoster.ObserveField("loadStatus", "FadeInForInit")
-    m.currentPoster.uri = m.serverIp + "/image/" + m.nextImageTask.fileName
+    m.currentPoster.uri = m.serverIp + "/image/" + m.nextImageTaskForInit.fileName
 
-    m.nextImageTask = invalid
+    m.nextImageTaskForInit = invalid
 end function
 
 function FadeInForInit()
@@ -44,8 +44,24 @@ function FadeInForInit()
         return invalid
     end if
     m.currentPoster.UnobserveField("loadStatus")
+    StartSwapAnimation()
+end function
+
+function StartSwapAnimation()
+    print "[ScreenSaver] StartSwapAnimation"
+    m.animation.ObserveField("state", "ListenForSwapAnimationDone")
     m.animation.control = "start"
-    ' TODO: add listener for when animation is done to start timer
+end function
+
+function ListenForSwapAnimationDone()
+    print "[ScreenSaver] ListenForSwapAnimationDone > state:"; m.animation.state
+    if m.animation.state <> "stopped"
+        return invalid
+    end if
+    m.animation.UnobserveField("state")
+
+    StartNextImageTask()
+    m.timer.control = "start"
 end function
 
 function StartNextImageTask()
@@ -56,7 +72,7 @@ function StartNextImageTask()
 end function
 
 function ListenForNextImageDone()
-    print "[ScreenSaver] ListenForNextImageDone"
+    print "[ScreenSaver] ListenForNextImageDone > state:"; m.nextImageTask.state
     if m.nextImageTask.state <> "done"
         return invalid
     end if
@@ -64,10 +80,20 @@ function ListenForNextImageDone()
 
     m.nextPoster.uri = m.serverIp + "/image/" + m.nextImageTask.fileName
 
+    taskNumber = m.nextImageTask.taskNumber
     m.nextImageTask = invalid
 end function
 
 function SwapPosters()
     print "[ScreenSaver] SwapPosters"
-    ' TODO: impl
+
+    tempPoster = m.currentPoster
+    m.currentPoster = m.nextPoster
+    m.nextPoster = tempPoster
+
+    tempTarget = m.fadeInInterpolator.fieldToInterp
+    m.fadeInInterpolator.fieldToInterp = m.fadeOutInterpolator.fieldToInterp
+    m.fadeOutInterpolator.fieldToInterp = tempTarget
+
+    StartSwapAnimation()
 end function

@@ -26,6 +26,10 @@ sub RunScreenSaver()
     port = CreateObject("roMessagePort")
     screen.SetMessagePort(port)
 
+    m.global = screen.getGlobalNode()
+    m.global.AddField("nextNumberForNextTaskImage", "int", true)
+    m.global.nextNumberForNextTaskImage = 0
+
     scene = screen.CreateScene("ScreenSaver")
     screen.Show()
 
