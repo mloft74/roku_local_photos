@@ -5,7 +5,10 @@ function Init()
 
     m.currentPoster = m.top.FindNode("posterA")
     m.nextPoster = m.top.FindNode("posterB")
+
     m.animation = m.top.FindNode("animation")
+    m.animation.ObserveField("state", "ListenForSwapAnimationDone")
+
     m.fadeInInterpolator = m.top.FindNode("fadeInInterpolator")
     m.fadeOutInterpolator = m.top.FindNode("fadeOutInterpolator")
 
@@ -26,16 +29,38 @@ function StartNextImageTaskForInit()
 end function
 
 function ListenForNextImageDoneForInit()
-    print "[ScreenSaver] ListenForNextImageDoneForInit > state:"; m.nextImageTaskForInit.state
+    print "[ScreenSaver] ListenForNextImageDoneForInit > state: "; m.nextImageTaskForInit.state
     if m.nextImageTaskForInit.state <> "done"
         return invalid
     end if
     m.nextImageTaskForInit.UnobserveField("state")
 
+    width = m.nextImageTaskForInit.width
+    height = m.nextImageTaskForInit.height
+    screenAspectRatio = 16 / 9
+    imageAspectRatio = width / height
+    if imageAspectRatio > screenAspectRatio
+        x = 0
+        y = ComputeLocation(width, height, 1280, 720)
+        m.currentPoster.translation = [x, y]
+    else
+        y = 0
+        x = ComputeLocation(height, width, 720, 1280)
+        m.currentPoster.translation = [x, y]
+    end if
+
     m.currentPoster.ObserveField("loadStatus", "FadeInForInit")
     m.currentPoster.uri = m.serverIp + "/image/" + m.nextImageTaskForInit.fileName
 
     m.nextImageTaskForInit = invalid
+end function
+
+function ComputeLocation(fullImgDim as integer, otherImgDim, fullScreenDim as integer, otherScreenDim as integer) as integer
+    scale = fullScreenDim / fullImgDim
+    scaledOtherImgDim = otherImgDim * scale
+    remainingOtherScreenDim = otherScreenDim - scaledOtherImgDim
+    location = remainingOtherScreenDim / 2
+    return location
 end function
 
 function FadeInForInit()
@@ -49,16 +74,14 @@ end function
 
 function StartSwapAnimation()
     print "[ScreenSaver] StartSwapAnimation"
-    m.animation.ObserveField("state", "ListenForSwapAnimationDone")
     m.animation.control = "start"
 end function
 
 function ListenForSwapAnimationDone()
-    print "[ScreenSaver] ListenForSwapAnimationDone > state:"; m.animation.state
+    print "[ScreenSaver] ListenForSwapAnimationDone > state: "; m.animation.state
     if m.animation.state <> "stopped"
         return invalid
     end if
-    m.animation.UnobserveField("state")
 
     StartNextImageTask()
     m.timer.control = "start"
@@ -72,11 +95,25 @@ function StartNextImageTask()
 end function
 
 function ListenForNextImageDone()
-    print "[ScreenSaver] ListenForNextImageDone > state:"; m.nextImageTask.state
+    print "[ScreenSaver] ListenForNextImageDone > state: "; m.nextImageTask.state
     if m.nextImageTask.state <> "done"
         return invalid
     end if
     m.nextImageTask.UnobserveField("state")
+
+    width = m.nextImageTask.width
+    height = m.nextImageTask.height
+    screenAspectRatio = 16 / 9
+    imageAspectRatio = width / height
+    if imageAspectRatio > screenAspectRatio
+        x = 0
+        y = ComputeLocation(width, height, 1280, 720)
+        m.nextPoster.translation = [x, y]
+    else
+        y = 0
+        x = ComputeLocation(height, width, 720, 1280)
+        m.nextPoster.translation = [x, y]
+    end if
 
     m.nextPoster.uri = m.serverIp + "/image/" + m.nextImageTask.fileName
 

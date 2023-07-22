@@ -12,7 +12,7 @@ function Init()
 end function
 
 function PrintWithTaskNumber(msg as string)
-    print "[NextImageTask] "; msg; " > taskNumber:"; m.top.taskNumber
+    print "[NextImageTask > taskNumber:"; m.top.taskNumber; "] "; msg
 end function
 
 function NextImage()
