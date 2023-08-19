@@ -25,6 +25,18 @@
       font = "font:LargeBoldSystemFont"
     />
 
+    <Label
+      id = "telnetMsg"
+      translation = "[100, 200]"
+      font = "font:LargeBoldSystemFont"
+    />
+    <Label
+      id = "telnetCmd"
+      translation = "[100, 250]"
+      font = "font:LargeBoldSystemFont"
+    />
+
+
     <Animation
       id = "animation"
       repeat = "false"

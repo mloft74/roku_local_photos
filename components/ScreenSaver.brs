@@ -16,10 +16,14 @@ function Init()
     m.timer.ObserveField("fire", "SwapPosters")
 
     m.error = m.top.FindNode("error")
+    m.telnetMsg = m.top.FindNode("telnetMsg")
+    m.telnetCmd = m.top.FindNode("telnetCmd")
 
     ' TODO: show error message if server isn't defined
     registrySection = CreateObject("roRegistrySection", "rokuLocalPhotos")
     m.serverIp = registrySection.Read("serverIp")
+
+    m.info = CreateObject("roDeviceInfo")
 
     if m.serverIp = invalid or m.serverIp = ""
         m.error.text = "Server not selected"
@@ -41,6 +45,12 @@ function ListenForNextImageDoneForInit()
         return invalid
     end if
     m.nextImageTaskForInit.UnobserveField("state")
+
+    if IsTaskInvalid(m.nextImageTaskForInit)
+        m.error.text = "Could not load image during intialization"
+        ShowTelnetMessage()
+        return invalid
+    end if
 
     width = m.nextImageTaskForInit.width
     height = m.nextImageTaskForInit.height
@@ -108,6 +118,12 @@ function ListenForNextImageDone()
     end if
     m.nextImageTask.UnobserveField("state")
 
+    if IsTaskInvalid(m.nextImageTask)
+        m.error.text = "Could not load image"
+        ShowTelnetMessage()
+        return invalid
+    end if
+
     width = m.nextImageTask.width
     height = m.nextImageTask.height
     screenAspectRatio = 16 / 9
@@ -140,4 +156,26 @@ function SwapPosters()
     m.fadeOutInterpolator.fieldToInterp = tempTarget
 
     StartSwapAnimation()
+end function
+
+function IsTaskInvalid(task as object)
+    print "[IsTaskInvalid]"
+    invalidFileName = task.fileName = invalid or task.fileName = ""
+    invalidWidth = task.width = invalid or task.width = 0
+    invalidHeight = task.height = invalid or task.width = 0
+    return invalidFileName or invalidWidth or invalidHeight
+end function
+
+function ShowTelnetMessage()
+    print "[ShowTelnetMessage]"
+    m.telnetMsg.text = "Look at logs with telnet to see the error"
+
+    localIps = m.info.GetIPAddrs()
+    items = localIps.Items()
+    if items.Count() = 0
+        return invalid
+    end if
+
+    localIp = items[0].value
+    m.telnetCmd.text = "telnet " + localIp + " 8087"
 end function
