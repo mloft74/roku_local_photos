@@ -15,10 +15,17 @@ function Init()
     m.timer = m.top.FindNode("timer")
     m.timer.ObserveField("fire", "SwapPosters")
 
+    m.error = m.top.FindNode("error")
+
+    ' TODO: show error message if server isn't defined
     registrySection = CreateObject("roRegistrySection", "rokuLocalPhotos")
     m.serverIp = registrySection.Read("serverIp")
 
-    StartNextImageTaskForInit()
+    if m.serverIp = invalid or m.serverIp = ""
+        m.error.text = "Server not selected"
+    else
+        StartNextImageTaskForInit()
+    end if
 end function
 
 function StartNextImageTaskForInit()

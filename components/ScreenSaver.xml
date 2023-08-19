@@ -19,6 +19,12 @@
       opacity = "0.0"
     />
 
+    <Label
+      id = "error"
+      translation = "[100, 100]"
+      font = "font:LargeBoldSystemFont"
+    />
+
     <Animation
       id = "animation"
       repeat = "false"
