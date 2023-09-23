@@ -86,11 +86,11 @@ function FadeInForInit()
         return invalid
     end if
     m.currentPoster.UnobserveField("loadStatus")
-    StartSwapAnimation()
+    StartFadeAnimation()
 end function
 
-function StartSwapAnimation()
-    print "[ScreenSaver] StartSwapAnimation"
+function StartFadeAnimation()
+    print "[ScreenSaver] StartFadeAnimation"
     m.animation.control = "start"
 end function
 
@@ -155,7 +155,7 @@ function SwapPosters()
     m.fadeInInterpolator.fieldToInterp = m.fadeOutInterpolator.fieldToInterp
     m.fadeOutInterpolator.fieldToInterp = tempTarget
 
-    StartSwapAnimation()
+    StartFadeAnimation()
 end function
 
 function IsTaskInvalid(task as object)
