@@ -58,11 +58,11 @@ function ListenForCurrentImageDoneForInit()
     imageAspectRatio = width / height
     if imageAspectRatio > screenAspectRatio
         x = 0
-        y = ComputeLocation(width, height, 1280, 720)
+        y = ComputeLocation(width, height, 1920, 1080)
         m.currentPoster.translation = [x, y]
     else
         y = 0
-        x = ComputeLocation(height, width, 720, 1280)
+        x = ComputeLocation(height, width, 1080, 1920)
         m.currentPoster.translation = [x, y]
     end if
 
@@ -130,11 +130,11 @@ function ListenForCurrentImageDone()
     imageAspectRatio = width / height
     if imageAspectRatio > screenAspectRatio
         x = 0
-        y = ComputeLocation(width, height, 1280, 720)
+        y = ComputeLocation(width, height, 1920, 1080)
         m.nextPoster.translation = [x, y]
     else
         y = 0
-        x = ComputeLocation(height, width, 720, 1280)
+        x = ComputeLocation(height, width, 1080, 1920)
         m.nextPoster.translation = [x, y]
     end if
 

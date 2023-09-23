@@ -5,16 +5,16 @@
   <children>
     <Poster
       id = "posterA"
-      loadWidth = "1280"
-      loadHeight = "720"
+      loadWidth = "1920"
+      loadHeight = "1080"
       loadDisplayMode = "scaleToFit"
       opacity = "0.0"
     />
 
     <Poster
       id = "posterB"
-      loadWidth = "1280"
-      loadHeight = "720"
+      loadWidth = "1920"
+      loadHeight = "1080"
       loadDisplayMode = "scaleToFit"
       opacity = "0.0"
     />
