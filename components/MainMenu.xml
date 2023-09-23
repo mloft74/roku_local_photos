@@ -5,37 +5,37 @@
   <children>
     <Label
       id = "title"
-      text = "Screen Saver"
-      translation = "[100, 100]"
+      text = "Screensaver"
+      translation = "[120, 120]"
       font = "font:LargeBoldSystemFont"
     />
 
     <Label
       id = "serverIpLabel"
       text = "Server IP:"
-      translation = "[100, 200]"
+      translation = "[120, 240]"
     />
 
     <Label
       id = "serverIpValue"
-      translation = "[150, 250]"
+      translation = "[150, 300]"
     />
 
     <Label
       id = "connectionStatusLabel"
       text = "Connection Status:"
-      translation = "[100, 300]"
+      translation = "[120, 360]"
     />
 
     <Label
       id = "connectionStatusValue"
       text = "Untested"
-      translation = "[150, 350]"
+      translation = "[150, 420]"
     />
 
     <LabelList
       id = "mainMenuOptions"
-      translation = "[100, 400]"
+      translation = "[120, 480]"
     >
       <ContentNode
         id = "mainMenuOptionsContent"

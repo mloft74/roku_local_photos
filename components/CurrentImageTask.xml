@@ -1,7 +1,7 @@
 <?xml version = "1.0" encoding = "utf-8" ?>
 
-<component name = "NextImageTask" extends = "Task" >
-  <script type = "text/brightscript" uri = "pkg:/components/NextImageTask.brs" />
+<component name = "CurrentImageTask" extends = "Task" >
+  <script type = "text/brightscript" uri = "pkg:/components/CurrentImageTask.brs" />
 
   <interface>
     <field id = "fileName" type = "string" />

@@ -1,20 +1,20 @@
 <?xml version = "1.0" encoding = "utf-8" ?>
-<component name = "ScreenSaver" extends = "Scene">
-  <script type = "text/brightscript" uri = "pkg:/components/ScreenSaver.brs" />
+<component name = "Screensaver" extends = "Scene">
+  <script type = "text/brightscript" uri = "pkg:/components/Screensaver.brs" />
 
   <children>
     <Poster
       id = "posterA"
-      loadWidth = "1280"
-      loadHeight = "720"
+      loadWidth = "1920"
+      loadHeight = "1080"
       loadDisplayMode = "scaleToFit"
       opacity = "0.0"
     />
 
     <Poster
       id = "posterB"
-      loadWidth = "1280"
-      loadHeight = "720"
+      loadWidth = "1920"
+      loadHeight = "1080"
       loadDisplayMode = "scaleToFit"
       opacity = "0.0"
     />

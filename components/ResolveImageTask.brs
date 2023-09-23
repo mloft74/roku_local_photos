@@ -1,6 +1,8 @@
 function Init()
-    print "[CheckConnectionTask] Init"
-    m.top.functionName = "CheckConnection"
+    m.top.taskNumber = m.global.nextNumberForResolveImageTask
+    m.global.nextNumberForResolveImageTask += 1
+    PrintWithTaskNumber("Init")
+    m.top.functionName = "ResolveImage"
 
     m.port = CreateObject("roMessagePort")
 
@@ -9,13 +11,23 @@ function Init()
     m.registrySection = CreateObject("roRegistrySection", "rokuLocalPhotos")
 end function
 
-function CheckConnection()
-    print "[CheckConnectionTask] CheckConnection"
-    m.top.message = CheckConnectionInternal()
+function PrintWithTaskNumber(msg as string)
+    print "[ResolveImageTask > taskNumber:"; m.top.taskNumber; "] "; msg
+end function
+
+function PrintWithTaskNumberAndFileName(msg as string)
+    print "[ResolveImageTask > taskNumber:"; m.top.taskNumber; ", fileName: "; m.top.fileName; "] "; msg
+end function
+
+function ResolveImage()
+    PrintWithTaskNumberAndFileName("ResolveImage")
+    m.top.message = ResolveImageInternal()
     m.top.control = "done"
 end function
 
-function CheckConnectionInternal() as string
+function ResolveImageInternal() as string
+    PrintWithTaskNumberAndFileName("ResolveImageInternal")
+
     if not m.registrySection.Exists("serverIp")
         return "Server IP not set"
     end if
@@ -25,8 +37,12 @@ function CheckConnectionInternal() as string
         return "IP not set"
     end if
 
-    m.xfer.SetUrl(serverIp + "/api/ping")
-    if not m.xfer.AsyncGetToString()
+    m.xfer.SetUrl(serverIp + "/api/image/resolve")
+    m.xfer.AddHeader("content-type", "application/json")
+    body = {}
+    body["fileName"] = m.top.fileName
+    json = FormatJson(body)
+    if not m.xfer.AsyncPostFromString(json)
         return "Failed to start request"
     end if
 
@@ -60,15 +76,13 @@ function CheckConnectionInternal() as string
             return "Could not parse response"
         end if
 
-        message = response.message
-        if message = invalid
-            return "Could not find message on response"
-        else if message = ""
-            return "Message on response was empty"
-        else if message = "pong"
-            return "Connected"
+        resolveStatus = response.resolveStatus
+        if resolveStatus = invalid
+            return "Could not find resolveStatus on response"
+        else if resolveStatus = ""
+            return "Resolve status on response was empty"
         else
-            return message
+            return resolveStatus
         end if
     end while
 end function
