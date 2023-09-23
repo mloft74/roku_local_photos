@@ -27,8 +27,6 @@ sub RunScreensaver()
     screen.SetMessagePort(port)
 
     m.global = screen.getGlobalNode()
-    m.global.AddField("nextNumberForNextImageTask", "int", true)
-    m.global.nextNumberForNextImageTask = 0
     m.global.AddField("nextNumberForCurrentImageTask", "int", true)
     m.global.nextNumberForCurrentImageTask = 0
     m.global.AddField("nextNumberForResolveImageTask", "int", true)
