@@ -92,9 +92,9 @@ function CurrentImageInternal() as object
             return invalid
         end if
 
-        fileName = GetFileName(response)
-        width = GetWidth(response)
-        height = GetHeight(response)
+        fileName = GetFileName(image)
+        width = GetWidth(image)
+        height = GetHeight(image)
         if fileName = invalid or width = invalid or height = invalid
             return invalid
         end if
@@ -103,7 +103,7 @@ function CurrentImageInternal() as object
     end while
 end function
 
-function GetFileName(input as object) as string
+function GetFileName(input as object) as object
     PrintWithTaskNumber("GetFileName")
     fileName = input.fileName
     if fileName = invalid
@@ -116,7 +116,7 @@ function GetFileName(input as object) as string
     return fileName
 end function
 
-function GetWidth(input as object) as integer
+function GetWidth(input as object) as object
     PrintWithTaskNumber("GetWidth")
     width = input.width
     if width = invalid
@@ -129,7 +129,7 @@ function GetWidth(input as object) as integer
     return width
 end function
 
-function GetHeight(input as object) as integer
+function GetHeight(input as object) as object
     PrintWithTaskNumber("GetHeight")
     height = input.height
     if height = invalid
