@@ -8,10 +8,12 @@ flowchart TD
   fadeInit --> startFade[StartFadeAnimation]
   startFade -->|Start fading animation| animation[m.animation]
   animation -.-> listenAnimation[ListenForFadeAnimationDone]
-  listenAnimation --> startCurrTask[StartCurrentImageTask]
+  listenAnimation --> resolveTask[StartResolveTask]
   listenAnimation -->|Start timer| timer[m.timer]
   timer -.-> swap[SwapPosters]
   swap --> startFade
+  resolveTask -.-> listenResolveTask[ListenForResolveImageDone]
+  listenResolveTask --> startCurrTask[StartCurrentImageTask]
   startCurrTask -.-> listenStartCurrTask[ListenForCurrentImageDone]
   listenStartCurrTask --> check{IsTaskInvalid}
   check -->|Yes| showTelnet
