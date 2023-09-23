@@ -37,14 +37,14 @@ function CheckConnectionInternal() as string
         end if
 
         msgType = Type(msg)
-        if not msgType = "roUrlEvent"
+        if msgType <> "roUrlEvent"
             return "Got wrong event type from port: " + msgType
         end if
-        if not msg.GetInt() = 1
+        if msg.GetInt() <> 1
             continue while
         end if
 
-        if not msg.GetResponseCode() = 200
+        if msg.GetResponseCode() <> 200
             return msg.GetFailureReason()
         end if
 
