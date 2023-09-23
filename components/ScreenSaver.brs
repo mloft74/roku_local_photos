@@ -28,32 +28,32 @@ function Init()
     if m.serverIp = invalid or m.serverIp = ""
         m.error.text = "Server not selected"
     else
-        StartNextImageTaskForInit()
+        StartCurrentImageTaskForInit()
     end if
 end function
 
-function StartNextImageTaskForInit()
-    print "[ScreenSaver] StartNextImageTaskForInit"
-    m.nextImageTaskForInit = CreateObject("roSGNode", "NextImageTask")
-    m.nextImageTaskForInit.ObserveField("state", "ListenForNextImageDoneForInit")
-    m.nextImageTaskForInit.control = "run"
+function StartCurrentImageTaskForInit()
+    print "[ScreenSaver] StartCurrentImageTaskForInit"
+    m.currentImageTaskForInit = CreateObject("roSGNode", "CurrentImageTask")
+    m.currentImageTaskForInit.ObserveField("state", "ListenForCurrentImageDoneForInit")
+    m.currentImageTaskForInit.control = "run"
 end function
 
-function ListenForNextImageDoneForInit()
-    print "[ScreenSaver] ListenForNextImageDoneForInit > state: "; m.nextImageTaskForInit.state
-    if m.nextImageTaskForInit.state <> "done"
+function ListenForCurrentImageDoneForInit()
+    print "[ScreenSaver] ListenForCurrentImageDoneForInit > state: "; m.currentImageTaskForInit.state
+    if m.currentImageTaskForInit.state <> "done"
         return invalid
     end if
-    m.nextImageTaskForInit.UnobserveField("state")
+    m.currentImageTaskForInit.UnobserveField("state")
 
-    if IsTaskInvalid(m.nextImageTaskForInit)
+    if IsTaskInvalid(m.currentImageTaskForInit)
         m.error.text = "Could not load image during intialization"
         ShowTelnetMessage()
         return invalid
     end if
 
-    width = m.nextImageTaskForInit.width
-    height = m.nextImageTaskForInit.height
+    width = m.currentImageTaskForInit.width
+    height = m.currentImageTaskForInit.height
     screenAspectRatio = 16 / 9
     imageAspectRatio = width / height
     if imageAspectRatio > screenAspectRatio
@@ -67,9 +67,9 @@ function ListenForNextImageDoneForInit()
     end if
 
     m.currentPoster.ObserveField("loadStatus", "FadeInForInit")
-    m.currentPoster.uri = m.serverIp + "/image/" + m.nextImageTaskForInit.fileName
+    m.currentPoster.uri = m.serverIp + "/image/" + m.currentImageTaskForInit.fileName
 
-    m.nextImageTaskForInit = invalid
+    m.currentImageTaskForInit = invalid
 end function
 
 function ComputeLocation(fullImgDim as integer, otherImgDim, fullScreenDim as integer, otherScreenDim as integer) as integer
@@ -100,32 +100,32 @@ function ListenForSwapAnimationDone()
         return invalid
     end if
 
-    StartNextImageTask()
+    StartCurrentImageTask()
     m.timer.control = "start"
 end function
 
-function StartNextImageTask()
-    print "[ScreenSaver] StartNextImageTask"
-    m.nextImageTask = CreateObject("roSGNode", "NextImageTask")
-    m.nextImageTask.ObserveField("state", "ListenForNextImageDone")
-    m.nextImageTask.control = "run"
+function StartCurrentImageTask()
+    print "[ScreenSaver] StartCurrentImageTask"
+    m.currentImageTask = CreateObject("roSGNode", "CurrentImageTask")
+    m.currentImageTask.ObserveField("state", "ListenForCurrentImageDone")
+    m.currentImageTask.control = "run"
 end function
 
-function ListenForNextImageDone()
-    print "[ScreenSaver] ListenForNextImageDone > state: "; m.nextImageTask.state
-    if m.nextImageTask.state <> "done"
+function ListenForCurrentImageDone()
+    print "[ScreenSaver] ListenForCurrentImageDone > state: "; m.currentImageTask.state
+    if m.currentImageTask.state <> "done"
         return invalid
     end if
-    m.nextImageTask.UnobserveField("state")
+    m.currentImageTask.UnobserveField("state")
 
-    if IsTaskInvalid(m.nextImageTask)
+    if IsTaskInvalid(m.currentImageTask)
         m.error.text = "Could not load image"
         ShowTelnetMessage()
         return invalid
     end if
 
-    width = m.nextImageTask.width
-    height = m.nextImageTask.height
+    width = m.currentImageTask.width
+    height = m.currentImageTask.height
     screenAspectRatio = 16 / 9
     imageAspectRatio = width / height
     if imageAspectRatio > screenAspectRatio
@@ -138,10 +138,10 @@ function ListenForNextImageDone()
         m.nextPoster.translation = [x, y]
     end if
 
-    m.nextPoster.uri = m.serverIp + "/image/" + m.nextImageTask.fileName
+    m.nextPoster.uri = m.serverIp + "/image/" + m.currentImageTask.fileName
 
-    taskNumber = m.nextImageTask.taskNumber
-    m.nextImageTask = invalid
+    taskNumber = m.currentImageTask.taskNumber
+    m.currentImageTask = invalid
 end function
 
 function SwapPosters()
