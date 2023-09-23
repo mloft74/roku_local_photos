@@ -7,7 +7,7 @@ function Init()
     m.nextPoster = m.top.FindNode("posterB")
 
     m.animation = m.top.FindNode("animation")
-    m.animation.ObserveField("state", "ListenForSwapAnimationDone")
+    m.animation.ObserveField("state", "ListenForFadeAnimationDone")
 
     m.fadeInInterpolator = m.top.FindNode("fadeInInterpolator")
     m.fadeOutInterpolator = m.top.FindNode("fadeOutInterpolator")
@@ -94,8 +94,8 @@ function StartFadeAnimation()
     m.animation.control = "start"
 end function
 
-function ListenForSwapAnimationDone()
-    print "[ScreenSaver] ListenForSwapAnimationDone > state: "; m.animation.state
+function ListenForFadeAnimationDone()
+    print "[ScreenSaver] ListenForFadeAnimationDone > state: "; m.animation.state
     if m.animation.state <> "stopped"
         return invalid
     end if
