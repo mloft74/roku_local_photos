@@ -5,7 +5,7 @@
   <children>
     <Label
       id = "title"
-      text = "Screen Saver"
+      text = "Screensaver"
       translation = "[120, 120]"
       font = "font:LargeBoldSystemFont"
     />

@@ -1,5 +1,5 @@
 function Init()
-    print "[ScreenSaver] Init"
+    print "[Screensaver] Init"
     m.top.backgroundUri = ""
     m.top.backgroundColor = "0xFF000000"
 
@@ -33,14 +33,14 @@ function Init()
 end function
 
 function StartCurrentImageTaskForInit()
-    print "[ScreenSaver] StartCurrentImageTaskForInit"
+    print "[Screensaver] StartCurrentImageTaskForInit"
     m.currentImageTaskForInit = CreateObject("roSGNode", "CurrentImageTask")
     m.currentImageTaskForInit.ObserveField("state", "ListenForCurrentImageDoneForInit")
     m.currentImageTaskForInit.control = "run"
 end function
 
 function ListenForCurrentImageDoneForInit()
-    print "[ScreenSaver] ListenForCurrentImageDoneForInit > state: "; m.currentImageTaskForInit.state
+    print "[Screensaver] ListenForCurrentImageDoneForInit > state: "; m.currentImageTaskForInit.state
     if m.currentImageTaskForInit.state <> "done"
         return invalid
     end if
@@ -82,7 +82,7 @@ function ComputeLocation(fullImgDim as integer, otherImgDim, fullScreenDim as in
 end function
 
 function FadeInForInit()
-    print "[ScreenSaver] FadeInForInit"
+    print "[Screensaver] FadeInForInit"
     if m.currentPoster.loadStatus <> "ready"
         return invalid
     end if
@@ -91,12 +91,12 @@ function FadeInForInit()
 end function
 
 function StartFadeAnimation()
-    print "[ScreenSaver] StartFadeAnimation"
+    print "[Screensaver] StartFadeAnimation"
     m.animation.control = "start"
 end function
 
 function ListenForFadeAnimationDone()
-    print "[ScreenSaver] ListenForFadeAnimationDone > state: "; m.animation.state
+    print "[Screensaver] ListenForFadeAnimationDone > state: "; m.animation.state
     if m.animation.state <> "stopped"
         return invalid
     end if
@@ -106,7 +106,7 @@ function ListenForFadeAnimationDone()
 end function
 
 function StartResolveImageTask()
-    print "[ScreenSaver] StartResolveImageTask > fileName: "; m.fileName
+    print "[Screensaver] StartResolveImageTask > fileName: "; m.fileName
     m.resolveImageTask = CreateObject("roSGNode", "ResolveImageTask")
     m.resolveImageTask.fileName = m.fileName
     m.resolveImageTask.ObserveField("state", "ListenForResolveImageDone")
@@ -114,7 +114,7 @@ function StartResolveImageTask()
 end function
 
 function ListenForResolveImageDone()
-    print "[ScreenSaver] ListenForResolveImageDone > state: "; m.resolveImageTask.state
+    print "[Screensaver] ListenForResolveImageDone > state: "; m.resolveImageTask.state
     if m.resolveImageTask.state <> "done"
         return invalid
     end if
@@ -122,7 +122,7 @@ function ListenForResolveImageDone()
 
     message = m.resolveImageTask.message
     if message = "resolved" or message = "noImages" or message = "notCurrent"
-        print "[ScreenSaver] ListenForResolveImageDone > resolveStatus: "; message
+        print "[Screensaver] ListenForResolveImageDone > resolveStatus: "; message
     else
         m.error.text = "Error resolving image: " + message
         ShowTelnetMessage()
@@ -135,14 +135,14 @@ function ListenForResolveImageDone()
 end function
 
 function StartCurrentImageTask()
-    print "[ScreenSaver] StartCurrentImageTask"
+    print "[Screensaver] StartCurrentImageTask"
     m.currentImageTask = CreateObject("roSGNode", "CurrentImageTask")
     m.currentImageTask.ObserveField("state", "ListenForCurrentImageDone")
     m.currentImageTask.control = "run"
 end function
 
 function ListenForCurrentImageDone()
-    print "[ScreenSaver] ListenForCurrentImageDone > state: "; m.currentImageTask.state
+    print "[Screensaver] ListenForCurrentImageDone > state: "; m.currentImageTask.state
     if m.currentImageTask.state <> "done"
         return invalid
     end if
@@ -176,7 +176,7 @@ function ListenForCurrentImageDone()
 end function
 
 function SwapPosters()
-    print "[ScreenSaver] SwapPosters"
+    print "[Screensaver] SwapPosters"
 
     tempPoster = m.currentPoster
     m.currentPoster = m.nextPoster

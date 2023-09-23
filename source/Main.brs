@@ -19,8 +19,8 @@ sub Main()
     end while
 end sub
 
-sub RunScreenSaver()
-    print "[Main] RunScreenSaver"
+sub RunScreensaver()
+    print "[Main] RunScreensaver"
     'Indicate this is a Roku SceneGraph application'
     screen = CreateObject("roSGScreen")
     port = CreateObject("roMessagePort")
@@ -32,7 +32,7 @@ sub RunScreenSaver()
     m.global.AddField("nextNumberForCurrentImageTask", "int", true)
     m.global.nextNumberForCurrentImageTask = 0
 
-    scene = screen.CreateScene("ScreenSaver")
+    scene = screen.CreateScene("Screensaver")
     screen.Show()
 
     while true
