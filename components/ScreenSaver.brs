@@ -66,8 +66,9 @@ function ListenForCurrentImageDoneForInit()
         m.currentPoster.translation = [x, y]
     end if
 
+    m.fileName = m.currentImageTaskForInit.fileName
     m.currentPoster.ObserveField("loadStatus", "FadeInForInit")
-    m.currentPoster.uri = m.serverIp + "/image/" + m.currentImageTaskForInit.fileName
+    m.currentPoster.uri = m.serverIp + "/image/" + m.fileName
 
     m.currentImageTaskForInit = invalid
 end function
@@ -100,8 +101,37 @@ function ListenForFadeAnimationDone()
         return invalid
     end if
 
-    StartCurrentImageTask()
+    StartResolveImageTask()
     m.timer.control = "start"
+end function
+
+function StartResolveImageTask()
+    print "[ScreenSaver] StartResolveImageTask > fileName: "; m.fileName
+    m.resolveImageTask = CreateObject("roSGNode", "ResolveImageTask")
+    m.resolveImageTask.fileName = m.fileName
+    m.resolveImageTask.ObserveField("state", "ListenForResolveImageDone")
+    m.resolveImageTask.control = "run"
+end function
+
+function ListenForResolveImageDone()
+    print "[ScreenSaver] ListenForResolveImageDone > state: "; m.resolveImageTask.state
+    if m.resolveImageTask.state <> "done"
+        return invalid
+    end if
+    m.resolveImageTask.UnobserveField("state")
+
+    message = m.resolveImageTask.message
+    if message = "resolved" or message = "noImages" or message = "notCurrent"
+        print "[ScreenSaver] ListenForResolveImageDone > resolveStatus: "; message
+    else
+        m.error.text = "Error resolving image: " + message
+        ShowTelnetMessage()
+        return invalid
+    end if
+    
+    m.resolveImageTask = invalid
+
+    StartCurrentImageTask()
 end function
 
 function StartCurrentImageTask()
@@ -138,7 +168,8 @@ function ListenForCurrentImageDone()
         m.nextPoster.translation = [x, y]
     end if
 
-    m.nextPoster.uri = m.serverIp + "/image/" + m.currentImageTask.fileName
+    m.fileName = m.currentImageTask.fileName
+    m.nextPoster.uri = m.serverIp + "/image/" + m.fileName
 
     taskNumber = m.currentImageTask.taskNumber
     m.currentImageTask = invalid

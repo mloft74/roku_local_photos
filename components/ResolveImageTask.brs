@@ -26,8 +26,11 @@ function ResolveImageInternal() as string
     end if
 
     m.xfer.SetUrl(serverIp + "/api/image/resolve")
-    json = FormatJson({ fileName: m.top.fileName })
-    if not m.xfer.AsyncPostToString(json)
+    m.xfer.AddHeader("content-type", "application/json")
+    body = {}
+    body["fileName"] = m.top.fileName
+    json = FormatJson(body)
+    if not m.xfer.AsyncPostFromString(json)
         return "Failed to start request"
     end if
 
