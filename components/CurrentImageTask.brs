@@ -95,6 +95,7 @@ function CurrentImageInternal() as object
         fileName = GetFileName(image)
         width = GetWidth(image)
         height = GetHeight(image)
+        PrintWithTaskNumber("CurrentImageInternal | { fileName: " + fileName.ToStr() + ", width: " + width.ToStr() + ", height: " + height.ToStr() + " }")
         if fileName = invalid or width = invalid or height = invalid
             return invalid
         end if

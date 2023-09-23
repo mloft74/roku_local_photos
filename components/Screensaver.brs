@@ -47,8 +47,7 @@ function ListenForCurrentImageDoneForInit()
     m.currentImageTaskForInit.UnobserveField("state")
 
     if IsTaskInvalid(m.currentImageTaskForInit)
-        m.error.text = "Could not load image during intialization"
-        ShowTelnetMessage()
+        ShowTelnetMessage("Could not load image during intialization")
         return invalid
     end if
 
@@ -82,7 +81,7 @@ function ComputeLocation(fullImgDim as integer, otherImgDim, fullScreenDim as in
 end function
 
 function FadeInForInit()
-    print "[Screensaver] FadeInForInit"
+    print "[Screensaver] FadeInForInit > loadStatus: "; m.currentPoster.loadStatus
     if m.currentPoster.loadStatus <> "ready"
         return invalid
     end if
@@ -124,8 +123,7 @@ function ListenForResolveImageDone()
     if message = "resolved" or message = "noImages" or message = "notCurrent"
         print "[Screensaver] ListenForResolveImageDone > resolveStatus: "; message
     else
-        m.error.text = "Error resolving image: " + message
-        ShowTelnetMessage()
+        ShowTelnetMessage("Error resolving image: " + message)
         return invalid
     end if
     
@@ -149,8 +147,7 @@ function ListenForCurrentImageDone()
     m.currentImageTask.UnobserveField("state")
 
     if IsTaskInvalid(m.currentImageTask)
-        m.error.text = "Could not load image"
-        ShowTelnetMessage()
+        ShowTelnetMessage("Could not load image")
         return invalid
     end if
 
@@ -182,6 +179,8 @@ function SwapPosters()
     m.currentPoster = m.nextPoster
     m.nextPoster = tempPoster
 
+    print "[Screensaver] SwapPosters | showing "; m.currentPoster.uri
+
     tempTarget = m.fadeInInterpolator.fieldToInterp
     m.fadeInInterpolator.fieldToInterp = m.fadeOutInterpolator.fieldToInterp
     m.fadeOutInterpolator.fieldToInterp = tempTarget
@@ -190,15 +189,16 @@ function SwapPosters()
 end function
 
 function IsTaskInvalid(task as object)
-    print "[IsTaskInvalid]"
+    print "[Screensaver] IsTaskInvalid"
     invalidFileName = task.fileName = invalid or task.fileName = ""
     invalidWidth = task.width = invalid or task.width = 0
     invalidHeight = task.height = invalid or task.width = 0
     return invalidFileName or invalidWidth or invalidHeight
 end function
 
-function ShowTelnetMessage()
-    print "[ShowTelnetMessage]"
+function ShowTelnetMessage(error as string)
+    print "[ShowTelnetMessage] error > "; error
+    m.error.text = error
     m.telnetMsg.text = "Look at logs with telnet to see the error"
 
     localIps = m.info.GetIPAddrs()

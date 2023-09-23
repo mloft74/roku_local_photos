@@ -31,6 +31,8 @@ sub RunScreensaver()
     m.global.nextNumberForNextImageTask = 0
     m.global.AddField("nextNumberForCurrentImageTask", "int", true)
     m.global.nextNumberForCurrentImageTask = 0
+    m.global.AddField("nextNumberForResolveImageTask", "int", true)
+    m.global.nextNumberForResolveImageTask = 0
 
     scene = screen.CreateScene("Screensaver")
     screen.Show()

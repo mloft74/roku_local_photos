@@ -1,5 +1,7 @@
 function Init()
-    print "[ResolveImageTask] Init"
+    m.top.taskNumber = m.global.nextNumberForResolveImageTask
+    m.global.nextNumberForResolveImageTask += 1
+    PrintWithTaskNumber("Init")
     m.top.functionName = "ResolveImage"
 
     m.port = CreateObject("roMessagePort")
@@ -9,13 +11,23 @@ function Init()
     m.registrySection = CreateObject("roRegistrySection", "rokuLocalPhotos")
 end function
 
+function PrintWithTaskNumber(msg as string)
+    print "[ResolveImageTask > taskNumber:"; m.top.taskNumber; "] "; msg
+end function
+
+function PrintWithTaskNumberAndFileName(msg as string)
+    print "[ResolveImageTask > taskNumber:"; m.top.taskNumber; ", fileName: "; m.top.fileName; "] "; msg
+end function
+
 function ResolveImage()
-    print "[ResolveImageTask] ResolveImage"
+    PrintWithTaskNumberAndFileName("ResolveImage")
     m.top.message = ResolveImageInternal()
     m.top.control = "done"
 end function
 
 function ResolveImageInternal() as string
+    PrintWithTaskNumberAndFileName("ResolveImageInternal")
+
     if not m.registrySection.Exists("serverIp")
         return "Server IP not set"
     end if
