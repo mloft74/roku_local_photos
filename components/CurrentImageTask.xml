@@ -1,0 +1,12 @@
+<?xml version = "1.0" encoding = "utf-8" ?>
+
+<component name = "CurrentImageTask" extends = "Task" >
+  <script type = "text/brightscript" uri = "pkg:/components/CurrentImageTask.brs" />
+
+  <interface>
+    <field id = "fileName" type = "string" />
+    <field id = "width" type = "integer" />
+    <field id = "height" type = "integer" />
+    <field id = "taskNumber" type = "integer" />
+  </interface>
+</component>

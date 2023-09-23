@@ -27,8 +27,10 @@ sub RunScreenSaver()
     screen.SetMessagePort(port)
 
     m.global = screen.getGlobalNode()
-    m.global.AddField("nextNumberForNextTaskImage", "int", true)
-    m.global.nextNumberForNextTaskImage = 0
+    m.global.AddField("nextNumberForNextImageTask", "int", true)
+    m.global.nextNumberForNextImageTask = 0
+    m.global.AddField("nextNumberForCurrentImageTask", "int", true)
+    m.global.nextNumberForCurrentImageTask = 0
 
     scene = screen.CreateScene("ScreenSaver")
     screen.Show()
